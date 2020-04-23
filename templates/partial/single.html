@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>{{ post.title }}</title>
+<meta name="description" content="{{ post.description }}"/>
+<meta name="keywords" content="{{ post.keywords }}"/>
+{% endblock %}
+
+{% block body %}
+  {% if post.visible %}
+
+      <main role="main" class="container">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h1 class="border-bottom border-gray pb-2 mb-0">{{ post.title }}</h1>
+    <div class="media text-muted pt-3">
+      <img src="{{ post.image.url }}" />
+
+    </div>
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">#{{ post.keywords }}</strong>
+        {{ post.content }}
+      </p>
+  </div>
+</main>
+  {% else %}
+    <p>Страница не найдена</p>
+  {% endif %}
+{% endblock %}

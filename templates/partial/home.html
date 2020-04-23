@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Главная</title>
+<meta name="description" content="{{ desc }}"/>
+<meta name="keywords" content="{{ key }}"/>
+{% endblock %}
+
+{% block body %}
+    <div class="album py-5 bg-light">
+    <div class="container">
+    <div class="row">
+  {% if not posts %}
+  <b>Статьи не найдены</b>
+  {% else %}
+    {% for obj in posts %}
+    <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <a href="{{ obj.get_absolute_url }}"><img class="bd-placeholder-img card-img-top" src="{{ obj.image.url }}" alt="{{ obj.title }}" width="100%" height="50px"></a>
+            <div class="card-body">
+             <h4>{{ obj.title }}</h4>
+              <p class="card-text">{{ obj.content|truncatechars:40 }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="{{ obj.get_absolute_url }}"><button type="button" class="btn btn-sm btn-outline-secondary">Подробнее</button></a>
+                </div>
+                <small class="text-muted">{{ obj.timestamp }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+  {% endif %}
+
+
+</div>
+
+    <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      {% if posts.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1" aria-disabled="true">Назад</a>
+        </li>
+          <li class="page-item">
+              <a class="page-link" href="?page={{ posts.previous_page_number }}">{{ posts.previous_page_number }}</a>
+          </li>
+      {% endif %}
+
+    <li class="page-item active"><a class="page-link">{{ posts.number }}</a></li>
+
+
+  {% if posts.has_next %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ posts.next_page_number }}">{{ posts.next_page_number }}</a>
+      </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ posts.next_page_number }}">Вперед</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+
+</div>
+
+
+{% endblock %}
+
